@@ -30,7 +30,6 @@ $('#btnlimpa').click(function () {
 
     CarregaEstudantes();
 })
-
 var tbody = document.querySelector('table tbody');
 var aluno = {};
 

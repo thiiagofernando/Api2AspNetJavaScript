@@ -87,6 +87,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="paginaweb\index.html" />
+    <Content Include="paginaweb\index.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
