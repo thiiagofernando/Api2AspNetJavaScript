@@ -86,6 +86,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Base.mdf" />
+    <Content Include="App_Data\Base_log.ldf">
+      <DependentUpon>Base.mdf</DependentUpon>
+    </Content>
     <Content Include="Global.asax" />
     <Content Include="paginaweb\index.html" />
     <Content Include="paginaweb\index.js" />

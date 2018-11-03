@@ -10,21 +10,53 @@ using WebApp01.Models;
 
 namespace WebApp01.Controllers
 {
-    [EnableCors("*","*","*")]
+    [EnableCors("*", "*", "*")]
+    [RoutePrefix("api/Aluno")]
     public class AlunoController : ApiController
     {
         // GET: api/Aluno
-        public IEnumerable<Aluno> Get()
+        [HttpGet]
+        [Route("Recuperar")]
+        public IHttpActionResult Recuperar()
         {
-            Aluno aluno = new Aluno();
-            return aluno.ListarAlunos();
+            try
+            {
+                Aluno aluno = new Aluno();
+                return Ok(aluno.ListarAlunos());
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
         // GET: api/Aluno/5
-        public Aluno Get(int id)
+        [HttpGet]
+        [Route("Recuperar/{id}/{nome}/{sobrenome}")]
+        public Aluno Get(int id,string nome,string sobrenome)
         {
             Aluno aluno = new Aluno();
             return aluno.ListarAlunos().Where(x => x.id == id).FirstOrDefault();
+        }
+
+        [HttpGet]
+        [Route(@"RecuperarPorDataNome/{data:regex([0-9]{4}\-[0-9]{2})}/{nome:minlength(5)}")]
+        public IHttpActionResult Recuperar(string data,string nome)
+        {
+            try
+            {
+                Aluno aluno = new Aluno();
+                IEnumerable<Aluno> alunos = aluno.ListarAlunos().Where(x => x.data == data || x.nome == nome);
+
+                if (!alunos.Any())
+                    return NotFound();
+                return Ok(alunos);
+                
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
         // POST: api/Aluno
@@ -39,7 +71,7 @@ namespace WebApp01.Controllers
         public Aluno Put(int id, [FromBody]Aluno aluno)
         {
             Aluno _aluno = new Aluno();
-            return _aluno.Atualizar(id,aluno);
+            return _aluno.Atualizar(id, aluno);
         }
 
         // DELETE: api/Aluno/5

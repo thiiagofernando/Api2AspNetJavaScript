@@ -120,7 +120,6 @@ D:\Api2AspNetJavaScript\WebApp01\bin\System.Net.Http.Formatting.xml
 D:\Api2AspNetJavaScript\WebApp01\bin\System.Web.Http.xml
 D:\Api2AspNetJavaScript\WebApp01\bin\System.Web.Http.WebHost.xml
 D:\Api2AspNetJavaScript\WebApp01\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-D:\Api2AspNetJavaScript\WebApp01\obj\Debug\WebApp01.csprojAssemblyReference.cache
 D:\Api2AspNetJavaScript\WebApp01\obj\Debug\WebApp01.csproj.CoreCompileInputs.cache
 D:\Api2AspNetJavaScript\WebApp01\obj\Debug\WebApp01.csproj.CopyComplete
 D:\Api2AspNetJavaScript\WebApp01\obj\Debug\WebApp01.dll

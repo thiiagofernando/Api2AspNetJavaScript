@@ -1,16 +1,16 @@
-function limpar() {
+function refresh() {
     window.location.reload();
 }
-function Limpar(){
+function Limpar() {
     $('#inputNome').val('');
     $('#inputSobrenome').val('');
     $('#inputTelefone').val('');
     $('#inputRA').val('');
     $('#titulo').text('Cadastrar Aluno');
-    $('#btncad').textContent = 'Cadastrar'
+    $('#btncad').textContent = 'Cadastrar';
     $('#btnlimpa').textContent = 'Limpar';
 }
-function verificarVazio(){
+function verificarVazio() {
     var nome = $('#inputNome').val();
     var sobrenome = $('#inputSobrenome').val();
     var telefone = $('#inputTelefone').val();
@@ -18,9 +18,9 @@ function verificarVazio(){
 
     if (nome == '' && sobrenome == '' && telefone == '' && ra == '') {
         swal("Nenhum informação encontrada", "", "error");
-        setTimeout("limpar()", 3000);
+        setTimeout("refresh()", 3000);
         return false;
-    }else{
+    } else {
         return true;
     }
 }
@@ -36,12 +36,12 @@ var aluno = {};
 function Cadastrar() {
     var verificar = verificarVazio();
 
-    if(verificar == true){
+    if (verificar == true) {
         aluno.nome = $('#inputNome').val();
         aluno.sobrenome = $('#inputSobrenome').val();
         aluno.telefone = $('#inputTelefone').val();
         aluno.ra = $('#inputRA').val();
-    
+
         if (aluno.id === undefined || aluno.id === 0) {
             SalvarEstudantes('POST', 0, aluno);
             swal("Aluno Cadastrado com Sucesso!!", "", "success");
@@ -51,6 +51,7 @@ function Cadastrar() {
         }
         CarregaEstudantes();
         Limpar();
+        
     }
 }
 
@@ -91,7 +92,7 @@ function AdicionaLinha(estudante) {
                     <td>${estudante.telefone}</td>
                     <td>${estudante.ra}</td>
                     <td><button data-toggle="modal" data-target="#exampleModal" onclick='editarEstudante(${JSON.stringify(estudante)})'class="btn btn-warning">Editar</button>
-                    <button onclick='deletarEstudante(${estudante.id})'class="btn btn-danger">Deletar</button></td>
+                    <button onclick='deletarEstudante(${JSON.stringify(estudante)})'class="btn btn-danger">Deletar</button></td>
 
 </tr>
                 `
@@ -127,8 +128,27 @@ function Excluir(id) {
     xhr.open(`DELETE`, `http://localhost:61018/api/aluno/${id}`, false);
     xhr.send();
 }
-function deletarEstudante(id) {
-    Excluir(id);
-    CarregaEstudantes();
-    swal("Aluno excluido!!", "", "success");
+function deletarEstudante(estudante) {
+
+    bootbox.confirm({
+        message: `Tem certeza que deseja excluir o aluno ${estudante.nome}`,
+        buttons: {
+            confirm: {
+                label: 'Sim',
+                className: 'btn-success'
+            },
+            cancel: {
+                label: 'Não',
+                className: 'btn-danger'
+            }
+        },
+        callback: function (result) {
+            if (result) {
+                Excluir(estudante.id);
+                CarregaEstudantes();
+                swal("Aluno excluido!!", "", "success");
+            }
+        }
+    });
+
 }
