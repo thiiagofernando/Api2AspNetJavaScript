@@ -127,3 +127,9 @@ D:\Api2AspNetJavaScript\WebApp01\obj\Debug\WebApp01.pdb
 D:\Api2AspNetJavaScript\WebApp01\bin\System.Web.Cors.dll
 D:\Api2AspNetJavaScript\WebApp01\bin\System.Web.Http.Cors.dll
 D:\Api2AspNetJavaScript\WebApp01\bin\System.Web.Http.Cors.xml
+D:\Api2AspNetJavaScript\WebApp01\bin\Microsoft.Owin.dll
+D:\Api2AspNetJavaScript\WebApp01\bin\Microsoft.Web.Infrastructure.dll
+D:\Api2AspNetJavaScript\WebApp01\bin\Owin.dll
+D:\Api2AspNetJavaScript\WebApp01\bin\Swashbuckle.Core.dll
+D:\Api2AspNetJavaScript\WebApp01\bin\WebActivatorEx.dll
+D:\Api2AspNetJavaScript\WebApp01\bin\Microsoft.Owin.xml
