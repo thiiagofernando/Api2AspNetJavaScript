@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -27,11 +30,37 @@ namespace WebApp01.Models
             return listaAlunos;
         }
 
+
+        public List<Aluno> ListarAlunosDb()
+        {
+            string strConecao = ConfigurationManager.ConnectionStrings["ConexaoBD"].ConnectionString;
+            IDbConnection conexao;
+            conexao = new SqlConnection(strConecao);
+            conexao.Open();
+            var listaAlunos = new List<Aluno>();
+            IDbCommand selectCommand = conexao.CreateCommand();
+            selectCommand.CommandText = "select * from Aluno";
+            IDataReader resultado = selectCommand.ExecuteReader();
+
+            while (resultado.Read())
+            {
+                var alu = new Aluno();
+                alu.id = Convert.ToInt32(resultado["Id"]);
+                alu.nome = Convert.ToString(resultado["Nome"]);
+                alu.sobrenome = Convert.ToString(resultado["SobreNome"]);
+                alu.telefone = Convert.ToString(resultado["Telefone"]);
+                alu.ra = Convert.ToInt32(resultado["RA"]);
+                alu.data = Convert.ToString(resultado["Data"]);
+                listaAlunos.Add(alu);
+            }
+            conexao.Close();
+            return listaAlunos;
+        }
         public bool RescreverArquivo(List<Aluno> listaAlunos)
         {
             var caminhoArquivo = HostingEnvironment.MapPath(@"~/App_Data/Base.json");
             var json = JsonConvert.SerializeObject(listaAlunos, Formatting.Indented);
-            File.WriteAllText(caminhoArquivo,json);
+            File.WriteAllText(caminhoArquivo, json);
             return true;
         }
 
@@ -44,11 +73,11 @@ namespace WebApp01.Models
             return aluno;
         }
 
-        public Aluno Atualizar(int id,Aluno Aluno)
+        public Aluno Atualizar(int id, Aluno Aluno)
         {
             var listaAlunos = this.ListarAlunos();
             var itemIdex = listaAlunos.FindIndex(p => p.id == id);
-            if (itemIdex >=0)
+            if (itemIdex >= 0)
             {
                 Aluno.id = id;
                 listaAlunos[itemIdex] = Aluno;
@@ -66,7 +95,7 @@ namespace WebApp01.Models
         {
             var listaAluno = this.ListarAlunos();
             var itemIndex = listaAluno.FindIndex(p => p.id == id);
-            if (itemIndex >=0)
+            if (itemIndex >= 0)
             {
                 listaAluno.RemoveAt(itemIndex);
             }
