@@ -14,7 +14,6 @@ namespace WebApp01.Controllers
     [RoutePrefix("api/Aluno")]
     public class AlunoController : ApiController
     {
-        // GET: api/Aluno
         [HttpGet]
         [Route("Recuperar")]
         public IHttpActionResult Recuperar()
@@ -22,63 +21,74 @@ namespace WebApp01.Controllers
             try
             {
                 Aluno aluno = new Aluno();
-                return Ok(aluno.ListarAlunosDb());
+                return Ok(aluno.ListarTodosAlunos());
             }
             catch (Exception ex)
             {
-                return InternalServerError(ex);
+                throw new Exception($"Erro {ex.Message}");
             }
         }
 
-        // GET: api/Aluno/5
         [HttpGet]
-        [Route("Recuperar/{id}/{nome}/{sobrenome}")]
-        public Aluno Get(int id,string nome,string sobrenome)
+        [Route("Recuperar/{id}/{nome?}/{sobrenome?}")]
+        public List<AlunoDTO> Get(int id,string nome = null,string sobrenome = null)
         {
-            Aluno aluno = new Aluno();
-            return aluno.ListarAlunos().Where(x => x.id == id).FirstOrDefault();
-        }
 
-        [HttpGet]
-        [Route(@"RecuperarPorDataNome/{data:regex([0-9]{4}\-[0-9]{2})}/{nome:minlength(5)}")]
-        public IHttpActionResult Recuperar(string data,string nome)
-        {
             try
             {
                 Aluno aluno = new Aluno();
-                IEnumerable<Aluno> alunos = aluno.ListarAlunos().Where(x => x.data == data || x.nome == nome);
-
-                if (!alunos.Any())
-                    return NotFound();
-                return Ok(alunos);
-                
+                return aluno.ListarAlunosIdNomeSobreNome(id, nome, sobrenome);
             }
             catch (Exception ex)
             {
-                return InternalServerError(ex);
+                throw new Exception($"Erro  {ex.Message}");
             }
         }
 
-        // POST: api/Aluno
-        public List<Aluno> Post(Aluno aluno)
+        [HttpPost]
+        public List<AlunoDTO> Post(AlunoDTO aluno)
         {
-            Aluno _aluno = new Aluno();
-            _aluno.Inserir(aluno);
-            return _aluno.ListarAlunos();
+
+            try
+            {
+                Aluno _aluno = new Aluno();
+                _aluno.Inserir(aluno);
+                return _aluno.ListarTodosAlunos();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro  {ex.Message}");
+            }
         }
 
-        // PUT: api/Aluno/5
-        public Aluno Put(int id, [FromBody]Aluno aluno)
+        [HttpPut]
+        public AlunoDTO Put(int id, [FromBody]AlunoDTO aluno)
         {
-            Aluno _aluno = new Aluno();
-            return _aluno.Atualizar(id, aluno);
+            try
+            {
+                Aluno _aluno = new Aluno();
+                return _aluno.Atualizar(id, aluno);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro  {ex.Message}");
+            }
         }
 
-        // DELETE: api/Aluno/5
-        public void Delete(int id)
+        [HttpDelete]
+        public string Delete(int id)
         {
-            Aluno _aluno = new Aluno();
-            _aluno.Deletar(id);
+            try
+            {
+                Aluno _aluno = new Aluno();
+                var deletado = _aluno.Deletar(id);
+                return $"Total Exluido: {deletado}";
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception($"Erro ao excluir aluno {ex.Message}");
+            }
         }
     }
 }

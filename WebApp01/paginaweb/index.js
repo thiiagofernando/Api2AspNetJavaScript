@@ -59,7 +59,7 @@ function CarregaEstudantes() {
     tbody.innerHTML = '';
     var xhr = new XMLHttpRequest();
 
-    xhr.open(`GET`, `http://localhost:61018/api/aluno/`, true);
+    xhr.open(`GET`, `http://localhost:61018/api/aluno/Recuperar`, true);
     xhr.onload = function () {
         var estudantes = JSON.parse(this.responseText);
         for (var indice in estudantes) {

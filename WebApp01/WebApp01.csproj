@@ -119,10 +119,10 @@
     </Compile>
     <Compile Include="Models\Aluno.cs" />
     <Compile Include="Models\AlunoDAO.cs" />
+    <Compile Include="Models\AlunoDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\Base.json" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
